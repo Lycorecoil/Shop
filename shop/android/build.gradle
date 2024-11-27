@@ -1,0 +1,32 @@
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        // Classe de dépendance pour le plugin Gradle de Firebase
+        classpath 'com.google.gms:google-services:4.3.15'  
+        classpath 'com.google.gms:google-services:4.4.2'
+        // Tu peux aussi ajouter d'autres dépendances Firebase si nécessaire, par exemple pour Firestore, Auth...
+    }
+}
+
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.buildDir = "../build"
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(":app")
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
